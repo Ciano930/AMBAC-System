@@ -73,14 +73,21 @@ public class HipScript1 : MonoBehaviour {
                 //Hinge1 Hip swivel
                 LhipSwivel = LHipHinge1.GetComponent<HingeJoint>();
                 LhipSwivelMotor = LhipSwivel.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(LhipSwivel, LhipSwivelMotor);
 
                 //Hinge2 Hip Hinge
                 LhipHinge = LHipHinge2.GetComponent<HingeJoint>();
                 LhipHingeMotor = LhipHinge.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(LhipHinge, LhipHingeMotor);
 
                 //Hinge3 Thigh Swivel
                 LthighSwivel = LHipHinge3.GetComponent<HingeJoint>();
                 LthighSwivelMotor = LthighSwivel.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(LthighSwivel, LthighSwivelMotor);
+
 
                 //Now we do our last little debug
 
@@ -125,14 +132,20 @@ public class HipScript1 : MonoBehaviour {
                 //Hinge1 Hip swivel
                 RhipSwivel = RHipHinge1.GetComponent<HingeJoint>();
                 RhipSwivelMotor = RhipSwivel.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(RhipSwivel, RhipSwivelMotor);
 
                 //Hinge2 Hip Hinge
                 RhipHinge = RHipHinge2.GetComponent<HingeJoint>();
                 RhipHingeMotor = RhipHinge.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(RhipHinge, RhipHingeMotor);
 
                 //Hinge3 Thigh Swivel
                 RthighSwivel = RHipHinge3.GetComponent<HingeJoint>();
                 RthighSwivelMotor = RthighSwivel.motor;
+                //Next we need to set up the Motor action
+                setUpMotor(RthighSwivel, RthighSwivelMotor);
 
                 //Now we do our last little debug
 
@@ -156,7 +169,15 @@ public class HipScript1 : MonoBehaviour {
         }
     }
 
-
+    //Here we set up the motors on the hinges. Next I will alter this to include the starting degree point but for now it is 90
+    void setUpMotor(HingeJoint hinge, JointMotor motor)
+    {
+        motor.force = 0;
+        motor.targetVelocity = 0;
+        motor.freeSpin = false;
+        hinge.motor = motor;
+        hinge.useMotor = true;
+    }
 
 
 
