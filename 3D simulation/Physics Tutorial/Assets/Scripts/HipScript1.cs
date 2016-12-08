@@ -17,10 +17,14 @@ public class HipScript1 : MonoBehaviour {
     public GameObject RHipHinge3;
 
     public HingeJoint LhipSwivel;
+    public JointLimits LhipSwivelLimits;
+
     public HingeJoint LhipHinge;
     public HingeJoint LthighSwivel;
 
     public HingeJoint RhipSwivel;
+    public JointLimits RhipSwivelLimits;
+
     public HingeJoint RhipHinge;
     public HingeJoint RthighSwivel;
     
@@ -75,6 +79,10 @@ public class HipScript1 : MonoBehaviour {
                 LhipSwivelMotor = LhipSwivel.motor;
                 //Next we need to set up the Motor action
                 setUpMotor(LhipSwivel, LhipSwivelMotor);
+
+                //Now we set up our joint limits
+                LhipSwivelLimits = LhipSwivel.limits;
+
 
                 //Hinge2 Hip Hinge
                 LhipHinge = LHipHinge2.GetComponent<HingeJoint>();
@@ -135,6 +143,9 @@ public class HipScript1 : MonoBehaviour {
                 //Next we need to set up the Motor action
                 setUpMotor(RhipSwivel, RhipSwivelMotor);
 
+                //Now we set up our joint limits
+                RhipSwivelLimits = RhipSwivel.limits;
+
                 //Hinge2 Hip Hinge
                 RhipHinge = RHipHinge2.GetComponent<HingeJoint>();
                 RhipHingeMotor = RhipHinge.motor;
@@ -179,10 +190,7 @@ public class HipScript1 : MonoBehaviour {
         hinge.useMotor = true;
     }
 
-
-
-
-
+    
 
     //=================================================================================================================================
     //============================= Now that we have finished the set up and everything is assigned lets try and have the legs Move.
