@@ -5,12 +5,15 @@ public class WaistStrategy1 : MonoBehaviour {
 
     public GameObject Robot;//the parent class and main gameObject for the full robot
     public GameObject Hip;
-    public GameObject WaistPivot;
+    public GameObject Waist;
 
     public HipScript1 hipScript;
 
     public float angle;
+    public float waistAngle;
+    public bool falling;
 
+    public float reactionStrength;
 
     // Use this for initialization
     void Start () {
@@ -24,50 +27,75 @@ public class WaistStrategy1 : MonoBehaviour {
 
         //next we need to find the waist orientation block
         //rotation we are look at is to keep the torso block at 0 x rotation
-        WaistPivot = Robot.transform.Find("waist pivot").gameObject;
+        Waist= Robot.transform.Find("waist").gameObject;
 
         //now we find our hipscript
         hipScript = (HipScript1)Hip.GetComponent(typeof(HipScript1));
         Debug.Log("found HipScript");
-        angle = 3.0f;
+        angle = 0.02f;
+
+        falling = false;
+
+        reactionStrength = 10.0f;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
+        waistAngle = Waist.transform.rotation.x;
         //we need to now check the orientation of the waist block.
-        if (WaistPivot.transform.rotation.x > angle) 
+        if (Waist.transform.rotation.x > angle) 
         {
-            hipScript.LhipSwivelMotor.force = 90;
+            //falling backwards
+            falling = true;
+            if(hipScript.LhipSwivelMotor.force < hipScript.LhipSwivelMotor.targetVelocity)
+            {
+                hipScript.LhipSwivelMotor.force = hipScript.LhipSwivelMotor.force + 10;
+            }
             hipScript.LhipSwivelMotor.targetVelocity = 90;
-            hipScript.RhipSwivelMotor.force = 90;
+
+            if (hipScript.RhipSwivelMotor.force < hipScript.RhipSwivelMotor.targetVelocity)
+            {
+                hipScript.RhipSwivelMotor.force = hipScript.RhipSwivelMotor.force + 10;
+            }
             hipScript.RhipSwivelMotor.targetVelocity = 90;
 
             //Now we update our limits to return the joint to a balance position
 
-            hipScript.LhipSwivelLimits.max = hipScript.LhipSwivelLimits.max + 0.5f;
-            hipScript.LhipSwivelLimits.max = hipScript.LhipSwivelLimits.min + 0.5f;
+            hipScript.LhipSwivelLimits.max = 180;
+            hipScript.LhipSwivelLimits.min = 0;
 
-            hipScript.RhipSwivelLimits.max = hipScript.RhipSwivelLimits.max + 0.5f;
-            hipScript.RhipSwivelLimits.max = hipScript.RhipSwivelLimits.min + 0.5f;
+            hipScript.RhipSwivelLimits.max = 180;
+            hipScript.RhipSwivelLimits.min = 0;
         }
-        else if (WaistPivot.transform.rotation.x < -angle)
+        else if (Waist.transform.rotation.x < -angle)
         {
-            hipScript.LhipSwivelMotor.force = 90;
-            hipScript.LhipSwivelMotor.targetVelocity = -90;
-            hipScript.RhipSwivelMotor.force = 90;
-            hipScript.RhipSwivelMotor.targetVelocity = -90;
+            //falling forwards
+            falling = true;
+
+            if (hipScript.LhipSwivelMotor.force > hipScript.LhipSwivelMotor.targetVelocity)
+            {
+                hipScript.LhipSwivelMotor.force = hipScript.LhipSwivelMotor.force - 5;
+            }
+            hipScript.LhipSwivelMotor.targetVelocity =  - 90;
+
+            if (hipScript.RhipSwivelMotor.force > hipScript.RhipSwivelMotor.targetVelocity)
+            {
+                hipScript.RhipSwivelMotor.force = hipScript.RhipSwivelMotor.force - 5;
+            }
+            hipScript.RhipSwivelMotor.targetVelocity =  - 90;
 
             //Now we update our limits to return the joint to a balance position
 
-            hipScript.LhipSwivelLimits.max = hipScript.LhipSwivelLimits.max - 0.5f;
-            hipScript.LhipSwivelLimits.max = hipScript.LhipSwivelLimits.min - 0.5f;
+            hipScript.LhipSwivelLimits.max = 180;
+            hipScript.LhipSwivelLimits.min = 0;
 
-            hipScript.RhipSwivelLimits.max = hipScript.RhipSwivelLimits.max - 0.5f;
-            hipScript.RhipSwivelLimits.max = hipScript.RhipSwivelLimits.min - 0.5f;
+            hipScript.RhipSwivelLimits.max = 180;
+            hipScript.RhipSwivelLimits.min = 0;
         }
         else
         {
+            Debug.Log("Not falling");
+            falling = false;
             hipScript.LhipSwivelLimits.max = 0.0f;
             hipScript.LhipSwivelLimits.min = 0.0f;
 

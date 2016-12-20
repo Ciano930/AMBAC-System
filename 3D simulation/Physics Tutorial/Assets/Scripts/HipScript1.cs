@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HipScript1 : MonoBehaviour {
+public class HipScript1 : MonoBehaviour
+{
 
     public GameObject Robot;//the parent class and main gameObject for the full robot
     public GameObject Hip;
@@ -27,7 +28,7 @@ public class HipScript1 : MonoBehaviour {
 
     public HingeJoint RhipHinge;
     public HingeJoint RthighSwivel;
-    
+
     public JointMotor LhipSwivelMotor;
     public JointMotor LhipHingeMotor;
     public JointMotor LthighSwivelMotor;
@@ -55,7 +56,8 @@ public class HipScript1 : MonoBehaviour {
     }
 
 
-    void setUpLeft(){
+    void setUpLeft()
+    {
 
         //Here we will set up the left
 
@@ -118,8 +120,9 @@ public class HipScript1 : MonoBehaviour {
             Debug.Log("Hip not found");
         }
     }
-    
-    void setUpRight(){
+
+    void setUpRight()
+    {
         //Here we will set up the right
 
         //The left Hip setup
@@ -190,12 +193,19 @@ public class HipScript1 : MonoBehaviour {
         hinge.useMotor = true;
     }
 
-    
+    void Update()
+    {
+       // Debug.Log("RHipHinge1 Max:" + RhipSwivelLimits.max + " Min:" + RhipSwivelLimits.min);
+        Debug.Log("RHipHinge1 force:" + RhipSwivelMotor.force + " targetVelocity:" + RhipSwivelMotor.targetVelocity);
 
-    //=================================================================================================================================
-    //============================= Now that we have finished the set up and everything is assigned lets try and have the legs Move.
-    //=================================================================================================================================
+        RhipSwivel.limits = RhipSwivelLimits;
+        LhipSwivel.limits = LhipSwivelLimits;
 
+        RhipSwivel.motor = RhipSwivelMotor;
+        LhipSwivel.motor = LhipSwivelMotor;
 
-
+    }
 }
+        //=================================================================================================================================
+        //============================= Now that we have finished the set up and everything is assigned lets try and have the legs Move.
+        //=================================================================================================================================
