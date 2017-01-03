@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//DETAILS ON WAIST STRATEGY
+//meant for minor inclinations the waist script is for fine motion to avoid large stutter.
+//Limit of inclination is 0.5 in Unity
+//After this point the AbsStrategy needs to take over.
+
+
 public class WaistStrategy1 : MonoBehaviour {
 
     public GameObject Robot;//the parent class and main gameObject for the full robot
@@ -86,11 +92,11 @@ public class WaistStrategy1 : MonoBehaviour {
 
             //Now we update our limits to return the joint to a balance position
 
-            hipScript.LhipSwivelLimits.max = 180;
-            hipScript.LhipSwivelLimits.min = 0;
+            hipScript.LhipSwivelLimits.max = 0;
+            hipScript.LhipSwivelLimits.min = -180;
 
-            hipScript.RhipSwivelLimits.max = 180;
-            hipScript.RhipSwivelLimits.min = 0;
+            hipScript.RhipSwivelLimits.max = 0;
+            hipScript.RhipSwivelLimits.min = -180;
         }
         else
         {
