@@ -12,8 +12,10 @@ public class DetectJoints : MonoBehaviour {
 
     public GameObject relevantPoint;
 
-	// Use this for initialization
-	void Start () {
+    public int multiplier = 0;
+
+    // Use this for initialization
+    void Start () {
         if(BodySrcManager == null)
         {
             Debug.Log("No Gameobject bodySrcManager Assigned!!");
@@ -52,8 +54,9 @@ public class DetectJoints : MonoBehaviour {
                     {
                         if(pilot.IsTracked)
                         {
+                            
                             var pos = pilot.Joints[TrackedJoint].Position;
-                            gameObject.transform.position = new Vector3(pos.X, pos.Y);
+                            gameObject.transform.position = new Vector3(pos.X * multiplier, (pos.Y * multiplier), pos.Z * multiplier);
                         }
                     }
                 }
