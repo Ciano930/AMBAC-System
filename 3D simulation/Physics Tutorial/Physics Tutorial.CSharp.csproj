@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\CentreOfMomentum.cs" />
     <Compile Include="Assets\Scripts\HipScript1.cs" />
     <Compile Include="Assets\Scripts\Kinect Scripts\DetectJoints.cs" />
+    <Compile Include="Assets\Scripts\MotorController.cs" />
     <Compile Include="Assets\Scripts\TargetingScript.cs" />
     <Compile Include="Assets\Scripts\TorsoScript.cs" />
     <Compile Include="Assets\Scripts\WaistStrategy1.cs" />
