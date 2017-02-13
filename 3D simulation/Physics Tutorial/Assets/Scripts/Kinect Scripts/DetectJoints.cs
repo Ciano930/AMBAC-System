@@ -12,7 +12,7 @@ public class DetectJoints : MonoBehaviour {
 
     public GameObject relevantPoint;
 
-    public int multiplier = 0;
+    public int multiplier = 10;
 
     // Use this for initialization
     void Start () {
@@ -54,7 +54,7 @@ public class DetectJoints : MonoBehaviour {
                     {
                         if(pilot.IsTracked)
                         {
-                            
+                            Debug.Log("Tracking now" + pilot.Joints[TrackedJoint].Position.X);
                             var pos = pilot.Joints[TrackedJoint].Position;
                             gameObject.transform.position = new Vector3(pos.X * multiplier, (pos.Y * multiplier), pos.Z * multiplier);
                         }

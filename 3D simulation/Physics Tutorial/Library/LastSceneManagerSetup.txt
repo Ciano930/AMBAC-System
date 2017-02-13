@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Upper torso Kinect Control V2.unity
+- path: Assets/Scenes/Version 4.unity
   isLoaded: 1
   isActive: 1
