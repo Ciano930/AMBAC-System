@@ -100,7 +100,7 @@ public class WaistStrategy1 : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Not falling");
+            //Debug.Log("Not falling");
             falling = false;
             hipScript.LhipSwivelLimits.max = 0.0f;
             hipScript.LhipSwivelLimits.min = 0.0f;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Windows.Kinect;
 
 public class TargetingScript: MonoBehaviour {
 
@@ -10,16 +11,57 @@ public class TargetingScript: MonoBehaviour {
 
     public GameObject sourceJoint;//the robot joint that this relates to
     public GameObject sourceSphere;//The kinect sphere that controls this target
+
+    public GameObject BodySrcManager;
+    private BodySourceManager bodyManager;
+    private Body[] pilots;
+
     // Use this for initialization
     void Start () {
-
+        if (BodySrcManager == null)
+        {
+            Debug.Log("No Gameobject bodySrcManager Assigned!!");
+        }
+        else
+        {
+            bodyManager = BodySrcManager.GetComponent<BodySourceManager>();
+        }
     }
 
     // Update is called once per frame
     void Update () {
+        if (bodyManager == null)
+        {
+            Debug.Log("BodyManager is not available");
+            return;
+        }
+        else
+        {
+            pilots = bodyManager.GetData();
 
-        //here we can call either the spheres as the sources or the joints.
-        UpdateAroundKinect();
+            if (pilots == null)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var pilot in pilots)
+                {
+                    if (pilot == null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (pilot.IsTracked)
+                        {
+                            //here we can call either the spheres as the sources or the joints.
+                            UpdateAroundKinect();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     void UpdateAroundJoints()

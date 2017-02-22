@@ -54,7 +54,7 @@ public class DetectJoints : MonoBehaviour {
                     {
                         if(pilot.IsTracked)
                         {
-                            Debug.Log("Tracking now" + pilot.Joints[TrackedJoint].Position.X);
+                            //Debug.Log("Tracking now" + pilot.Joints[TrackedJoint].Position.X);
                             var pos = pilot.Joints[TrackedJoint].Position;
                             gameObject.transform.position = new Vector3(pos.X * multiplier, (pos.Y * multiplier), pos.Z * multiplier);
                         }
