@@ -89,8 +89,7 @@ public class MotorController : MonoBehaviour
             //now we use the SSS triangle equation for angle
             //angle =( mathf.acos((A*A)+(B*B)-(C*C) / (2*A*B)) ) *  mathf.Rad2Deg
             realAngle = Mathf.Acos(((sideA * sideA) + (sideB * sideB) - (sideC * sideC) ) / (2 * sideA * sideB)) * Mathf.Rad2Deg;
-
-            Debug.Log("realAngle : " + realAngle);
+            
 
             //Now we have the correct angle next step is t o update the motor
 
