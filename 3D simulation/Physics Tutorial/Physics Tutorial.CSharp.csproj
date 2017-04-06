@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\KneeHipShperes.cs" />
     <Compile Include="Assets\Scripts\MotorController.cs" />
     <Compile Include="Assets\Scripts\MotorController2.cs" />
+    <Compile Include="Assets\Scripts\SocketToRPI.cs" />
     <Compile Include="Assets\Scripts\TargetingScript.cs" />
     <Compile Include="Assets\Scripts\TorsoScript.cs" />
     <Compile Include="Assets\Scripts\WaistStrategy1.cs" />

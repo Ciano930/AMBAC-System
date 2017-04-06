@@ -15,6 +15,8 @@ public class MotorController : MonoBehaviour
 
     public float angleFromZero;
     public float realAngle;
+    public int pin;
+    //public float time;
 
     private float calibratedZeroAngle;
 
@@ -27,11 +29,23 @@ public class MotorController : MonoBehaviour
     private float sideB;
     private float sideC;
 
+    private float timer;
+    private float timeMax;
+    public float interval;
+
+    public bool sentMessage;
+    //now we need to call our connection script
+
+    public SocketToRPI socketScript;
+
     //The main logic for these will change depending on which of these motors we are using and so a value will be set ahead of time.
     // Use this for initialization
     void Start()
     {
-        if (option == 'X' || option == 'Y' || option == 'Z') // will Either be a an X, Y or Z Joint
+        timeMax = 0.2f;//runs every .2 of a second (5 times a second)
+        timer = timer + interval;
+
+        if (option == 'X') // will Either be a an X, Y
         {
             run = true;
             calibrated = false;
@@ -55,23 +69,19 @@ public class MotorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //we need to know which of the axis' of rotation will affect our motor as some targeting spheres affect multiple motors.
         if (run)
         {
-            switch (option)
-            {
-                case 'X'://Single hinge (knee/spine)
-                    singleHingeUpdateMotor();
-                    break;
-                case 'Y'://Universal Hinge (hip/thigh)
-                    break;
-            }
+
+            timer += Time.deltaTime;
+            UpdateMotor();
+                
         }
     }
 
-    void singleHingeUpdateMotor()
+    void UpdateMotor()
     {
-        if (Input.anyKey)
+        //if (Input.GetKeyDown("space"))
+        if(Input.anyKey)
         {
             calibrate();
         }
@@ -104,12 +114,7 @@ public class MotorController : MonoBehaviour
         {
             calibrate();
         }
-
-        if (calibrated)
-        {
-            //for the complex joints I need a different algorithm as I am Missing the 
-
-        }
+        
     }
 
     void calibrate()
@@ -118,11 +123,11 @@ public class MotorController : MonoBehaviour
         //this will be the zero position for our servo's and all motion from here will be an angle calculated using dot product
 
         //we need first the three distances of the joints. 
-        //from Knee to Hip (A)
+        //(A)
         sideA = Vector3.Distance(trackedSource.transform.position, trackedPoint2.transform.position);
-        //from Knee to Ankle (B)
+        //(B)
         sideB = Vector3.Distance(trackedSource.transform.position, trackedPoint.transform.position);
-        //from Ankle to hip (C)
+        //(C)
         sideC = Vector3.Distance(trackedPoint.transform.position, trackedPoint2.transform.position);
 
         //now we use the SSS triangle equation for angle
@@ -136,6 +141,13 @@ public class MotorController : MonoBehaviour
     {
         angleFromZero = calibratedZeroAngle - realAngle;
 
+        if (timer > timeMax)
+        {
+           socketScript.sendAngle(pin, angleFromZero);
+           timer = 0.0f;
+        }
+
+        //for simulation calibration
         jointLimit.max = angleFromZero+1;
         jointLimit.min = angleFromZero-1;
 
